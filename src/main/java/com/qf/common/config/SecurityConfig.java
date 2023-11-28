@@ -2,15 +2,16 @@ package com.qf.common.config;
 
 import com.qf.common.constant.Constant;
 import com.qf.common.filter.JwtAuthenticationTokenFilter;
+import com.qf.system.security.auth.MyauthorizationManager;
+import com.qf.system.security.exception.NoAuthenticationEntryPoint;
 import com.qf.system.security.filter.LoginAuthenticationFilter;
 import com.qf.system.security.handler.LoginFailureHandler;
 import com.qf.system.security.handler.LoginSuccessHandler;
-import com.qf.system.security.handler.NoAuthAccessDeniedHandler;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,24 +26,34 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class SecurityConfig {
 
     @Resource
     private AuthenticationConfiguration authenticationConfiguration;
 
     @Resource
-    private NoAuthAccessDeniedHandler noAuthAccessDeniedHandler;
+    private MyauthorizationManager authorizationManager;
+
+    @Resource
+    private NoAuthenticationEntryPoint noAuthenticationEntryPoint;
+
+    @Resource
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(e -> e.requestMatchers(Constant.annos).permitAll());
+        http.authorizeHttpRequests(e->e.anyRequest().access(authorizationManager));
 
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         // 重新登录
         http.addFilterAt(loginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.formLogin(e -> e.successHandler(new LoginSuccessHandler()).failureHandler(new LoginFailureHandler()));
         // 异常处理
-        http.exceptionHandling(e -> e.accessDeniedHandler(noAuthAccessDeniedHandler));
+        // 登录授权 401
+        http.exceptionHandling(e -> e.authenticationEntryPoint(noAuthenticationEntryPoint));
 
 
         // 跨域漏洞防御 关闭

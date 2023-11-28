@@ -1,10 +1,14 @@
 package com.qf.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author : sin
@@ -12,10 +16,16 @@ import java.util.Collection;
  * @Description :
  */
 @ToString
-public class User implements UserDetails {
+@Data
+public class User implements Serializable, UserDetails {
+    private static final long serialVersionUID = 1L;
+
     private String username;
 
     private String password;
+
+    @TableField(exist = false)
+    private List<GrantedAuthority> authorities;
 
     public User(String username, String password) {
         this.username = username;
@@ -24,7 +34,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override

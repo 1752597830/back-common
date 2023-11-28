@@ -19,6 +19,7 @@ public class Constant {
             "/login",
             "/unAuth",
             "/user/refreshToken",
+            "/test1",
             ".css",
             "**.css",
             ".js",
