@@ -34,7 +34,7 @@ public class BaseResponse<T> implements Serializable {
     public static <T> BaseResponse<T> success(T data) {
         BaseResponse<T> response = new BaseResponse<>();
         response.setCode(ResultCode.SUCCESS.getCode());
-        response.setMessage(response.getMessage());
+        response.setMessage(ResultCode.SUCCESS.getMessage());
         response.setData(data);
         return response;
     }
