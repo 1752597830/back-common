@@ -25,14 +25,11 @@ import java.util.Map;
  * @Description : 登录成功响应
  */
 @Slf4j
-@Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-    @Autowired
-    JwtUtil jwtUtil;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws IOException, ServletException {
         log.info("登录成功!");
-        //JwtUtil jwtUtil = BeanUtils.getBean("JWTToken");
+        JwtUtil jwtUtil = BeanUtils.getBean("JWTToken");
 
         String token = jwtUtil.token(auth);
         Map<String, Object> map = new HashMap<>();

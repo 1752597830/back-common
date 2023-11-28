@@ -3,6 +3,7 @@ package com.qf.common.filter;
 import com.alibaba.fastjson.JSON;
 import com.qf.common.constant.Constant;
 import com.qf.common.core.domain.BaseResponse;
+import com.qf.common.utils.BeanUtils;
 import com.qf.common.utils.GeneralUtil;
 import com.qf.common.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -25,11 +26,7 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    @Value("${token.header}")
-    private static String HEADER;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -52,13 +49,15 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         if (token != null) {
             try {
+                JwtUtil jwtUtil = BeanUtils.getBean("JWTToken");
                 jwtUtil.tokenVerify(token);
             }catch (Exception e){
-                response.setStatus(200);
-                response.setContentType("application/json;charset=UTF-8");
-                log.info("非法token");
-                response.getWriter().write(JSON.toJSONString(BaseResponse.fail(400, "非法token")));
-                return;
+                throw e;
+                //response.setStatus(200);
+                //response.setContentType("application/json;charset=UTF-8");
+                //log.info("非法token");
+                //response.getWriter().write(JSON.toJSONString(BaseResponse.fail(400, "非法token")));
+                //return;
             }
         }
         log.info("校验成功");
