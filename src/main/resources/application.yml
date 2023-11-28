@@ -28,6 +28,8 @@ logging:
 
 # Spring配置
 spring:
+  application:
+    name: springboot-init
   profiles:
     active: druid
   # redis 配置
@@ -73,6 +75,9 @@ mybatis-plus:
     db-config:
       ## id生成策略为雪花id
       id-type: assign_id
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
     ## 不启用mybatis-plus的banner
     banner: false
 
