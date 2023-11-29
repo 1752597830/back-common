@@ -2,6 +2,7 @@ package com.qf.common.config;
 
 import com.qf.common.constant.Constant;
 import com.qf.common.filter.JwtAuthenticationTokenFilter;
+import com.qf.common.filter.VerifyCodeFilter;
 import com.qf.system.security.auth.MyauthorizationManager;
 import com.qf.system.security.exception.NoAuthenticationEntryPoint;
 import com.qf.system.security.filter.LoginAuthenticationFilter;
@@ -32,14 +33,29 @@ public class SecurityConfig {
     @Resource
     private AuthenticationConfiguration authenticationConfiguration;
 
+    /**
+     * 自定义权限校验
+     */
     @Resource
     private MyauthorizationManager authorizationManager;
 
+    /**
+     * 自定义认证
+     */
     @Resource
     private NoAuthenticationEntryPoint noAuthenticationEntryPoint;
 
+    /**
+     * token拦截器
+     */
     @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
+    /**
+     * 验证码拦截器
+     */
+    @Resource
+    private VerifyCodeFilter verifyCodeFilter;
 
 
     @Bean
@@ -48,6 +64,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(e->e.anyRequest().access(authorizationManager));
 
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
         // 重新登录
         http.addFilterAt(loginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.formLogin(e -> e.successHandler(new LoginSuccessHandler()).failureHandler(new LoginFailureHandler()));
