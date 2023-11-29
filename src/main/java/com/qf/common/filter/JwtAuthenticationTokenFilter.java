@@ -52,12 +52,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 JwtUtil jwtUtil = BeanUtils.getBean("JWTToken");
                 jwtUtil.tokenVerify(token);
             }catch (Exception e){
-                throw e;
-                //response.setStatus(200);
-                //response.setContentType("application/json;charset=UTF-8");
-                //log.info("非法token");
-                //response.getWriter().write(JSON.toJSONString(BaseResponse.fail(400, "非法token")));
-                //return;
+                response.setStatus(200);
+                response.setContentType("application/json;charset=UTF-8");
+                log.info("非法token");
+                response.getWriter().write(JSON.toJSONString(BaseResponse.fail(400, "登录过期，请重新登录！")));
+                return;
             }
         }
         log.info("校验成功");

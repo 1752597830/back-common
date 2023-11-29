@@ -1,6 +1,7 @@
 package com.qf.common.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -10,6 +11,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * @date : 2023/11/27 17:23
  * @Description : Redis配置类
  */
+@Configuration
 public class RedisConfig {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
