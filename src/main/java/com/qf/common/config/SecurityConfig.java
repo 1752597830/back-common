@@ -67,7 +67,9 @@ public class SecurityConfig {
         http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
         // 重新登录
         http.addFilterAt(loginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.formLogin(e -> e.successHandler(new LoginSuccessHandler()).failureHandler(new LoginFailureHandler()));
+        // 重写登录请求loginProcessingUrl
+        http.formLogin(e -> e.loginProcessingUrl("/login").successHandler(new LoginSuccessHandler()).failureHandler(new LoginFailureHandler()));
+
         // 异常处理
         // 登录授权 401
         http.exceptionHandling(e -> e.authenticationEntryPoint(noAuthenticationEntryPoint));

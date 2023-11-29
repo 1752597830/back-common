@@ -18,12 +18,12 @@ public class TestController {
 
     @RequestMapping("/test")
     public BaseResponse test() {
-        throw new BaseException(501, "用户不存在");
+        throw new BaseException("501", "用户不存在");
     }
 
     @RequestMapping("/test1")
     public BaseResponse test1() {
         log.info("进来了");
-        throw new BaseException(100, "校验了");
+        throw new BaseException("100", "校验了");
     }
 }

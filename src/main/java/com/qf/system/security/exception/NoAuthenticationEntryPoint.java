@@ -2,6 +2,8 @@ package com.qf.system.security.exception;
 
 import com.alibaba.fastjson.JSON;
 import com.qf.common.core.domain.BaseResponse;
+import com.qf.common.core.domain.ResultCode;
+import com.qf.common.utils.ServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +25,6 @@ public class NoAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("认证异常");
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(JSON.toJSONString(BaseResponse.fail(401, "认证失败，请重新登录!")));
+        ServletUtils.renderString(response, ResultCode.NOT_LOGIN_ERROR.getCode(), ResultCode.NOT_LOGIN_ERROR.getMessage());
     }
 }

@@ -6,6 +6,7 @@ import com.qf.common.core.domain.BaseResponse;
 import com.qf.common.utils.BeanUtils;
 import com.qf.common.utils.GeneralUtil;
 import com.qf.common.utils.JwtUtil;
+import com.qf.common.utils.ServletUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 1、判断url是否匿名访问
         String requestURI = request.getRequestURI();
+        log.info("url请求是：" + requestURI);
         //匿名地址直接访问
         if(GeneralUtil.contains(requestURI, Constant.annos)){
             filterChain.doFilter(request, response);
@@ -41,10 +43,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
         //log.info("接收到的token:{}",token);
         if( token == null ) {
-            response.setStatus(200);
-            response.setContentType("application/json;charset=UTF-8");
-            log.info("未登录无法访问!");
-            response.getWriter().write(JSON.toJSONString(BaseResponse.fail(401, "未登录无法访问！")));
+            ServletUtils.renderString(response, "", "未登录无法访问！");
             return;
         }
         if (token != null) {
@@ -52,10 +51,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 JwtUtil jwtUtil = BeanUtils.getBean("JWTToken");
                 jwtUtil.tokenVerify(token);
             }catch (Exception e){
-                response.setStatus(200);
-                response.setContentType("application/json;charset=UTF-8");
-                log.info("非法token");
-                response.getWriter().write(JSON.toJSONString(BaseResponse.fail(400, "登录过期，请重新登录！")));
+                ServletUtils.renderString(response, "", "登录过期，请重新登录！");
                 return;
             }
         }

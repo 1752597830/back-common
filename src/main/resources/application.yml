@@ -4,27 +4,26 @@ springboot-init:
   name: springboot-init
   # 版本
   version: 1.0.0
-
 # 开发环境配置
-server:
-  #服务器的HTTP端口
-  port: 8080
-  servlet:
-    # 应用的访问路径
-    context-path: /
-  tomcat:
-    # tomcat的URI编码
-    uri-encoding: UTF-8
-    # tomcat最大线程数，默认为200
-    max-threads: 800
-    # Tomcat启动初始化的线程数，默认值25
-    min-spare-threads: 30
+#server:
+#  #服务器的HTTP端口
+#  port: 8080
+#  servlet:
+#    # 应用的访问路径
+#    context-path: /
+#  tomcat:
+#    # tomcat的URI编码
+#    uri-encoding: UTF-8
+#    # tomcat最大线程数，默认为200
+#    max-threads: 800
+#    # Tomcat启动初始化的线程数，默认值25
+#    min-spare-threads: 30
 
 # 日志配置
-logging:
-  level:
-    com.msb: debug
-    org.springframework: warn
+#logging:
+#  level:
+#    com.msb: debug
+#    org.springframework: warn
 
 # Spring配置
 spring:
@@ -90,3 +89,20 @@ token:
   secret: qf123
   # 令牌有效期（默认30分钟）
   expireTime: 30
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.qf.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

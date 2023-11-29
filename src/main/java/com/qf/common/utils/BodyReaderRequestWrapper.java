@@ -42,7 +42,6 @@ public class BodyReaderRequestWrapper extends HttpServletRequestWrapper {
                 isr.close();
             }
         }
-
         sb.toString();
         body = sb.toString();
     }

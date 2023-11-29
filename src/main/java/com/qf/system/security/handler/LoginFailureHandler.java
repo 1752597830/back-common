@@ -1,7 +1,10 @@
 package com.qf.system.security.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.qf.common.constant.HttpStatus;
 import com.qf.common.core.domain.BaseResponse;
+import com.qf.common.core.domain.ResultCode;
+import com.qf.common.utils.ServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,7 +41,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             result = "登录失败!";
         }
         log.info("登录失败!");
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(JSON.toJSONString(BaseResponse.fail(500, result)));
+        ServletUtils.renderString(response, ResultCode.ERROR.getCode(), result);
     }
 }

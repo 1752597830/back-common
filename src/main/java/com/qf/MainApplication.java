@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 项目启动入口
  */
 @SpringBootApplication
-@MapperScan("com.qf.**.mapper")
+@MapperScan("com.qf.system.mapper")
 public class MainApplication {
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);

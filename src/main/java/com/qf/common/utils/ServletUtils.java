@@ -1,5 +1,7 @@
 package com.qf.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.qf.common.core.domain.BaseResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -60,16 +62,12 @@ public class ServletUtils {
     /**
      * 将字符串渲染到客户端
      *
-     * @param response 渲染对象
-     * @param string   待渲染的字符串
-     * @return null
      */
-    public static String renderString(HttpServletResponse response, String string) {
+    public static String renderString(HttpServletResponse response, String code, String msg) {
         try {
             response.setStatus(200);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            response.getWriter().print(string);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(JSON.toJSONString(BaseResponse.fail(code, msg)));
         } catch (IOException e) {
             e.printStackTrace();
         }

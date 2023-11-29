@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.qf.common.core.domain.BaseResponse;
 import com.qf.common.utils.BeanUtils;
 import com.qf.common.utils.JwtUtil;
+import com.qf.common.utils.ServletUtils;
 import com.qf.domain.User;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
@@ -34,7 +35,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String token = jwtUtil.token(auth);
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
-
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(JSON.toJSONString(BaseResponse.success(map)));
     }

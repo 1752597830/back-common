@@ -16,7 +16,7 @@ public class BaseResponse<T> implements Serializable {
     /**
      * 响应状态码
      */
-    private int code;
+    private String code;
 
     /**
      * 响应结果描述
@@ -53,7 +53,7 @@ public class BaseResponse<T> implements Serializable {
     /**
      * 失败返回
      */
-    public static <T> BaseResponse<T> fail(int code, String message){
+    public static <T> BaseResponse<T> fail(String code, String message){
 
         BaseResponse<T> response = new BaseResponse<>();
         response.setCode(code);

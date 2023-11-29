@@ -103,13 +103,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--基于knife4j-openapi3的api接口文档生成-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>4.3.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

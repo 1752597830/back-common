@@ -6,6 +6,7 @@ import com.qf.common.constant.UserConstant;
 import com.qf.common.core.domain.BaseResponse;
 import com.qf.common.utils.BodyReaderRequestWrapper;
 import com.qf.common.utils.RedisCache;
+import com.qf.common.utils.ServletUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -55,26 +56,17 @@ public class VerifyCodeFilter extends GenericFilterBean {
                     String uuid = map.get("uuid");
                     if (StringUtils.isEmpty(code)) {
                         //throw new BaseException("验证码不能为空!");
-                        response.setStatus(200);
-                        response.setContentType("application/json;charset=UTF-8");
-                        log.info("验证码不能为空!");
-                        response.getWriter().write(JSON.toJSONString(BaseResponse.fail(401, "验证码不能为空！")));
+                        ServletUtils.renderString(response, "", "验证码不能为空！");
                         return;
                     }
                     if (!code.equals(redisCache.getCacheObject(UserConstant.captcha + uuid))) {
                         //throw new BaseException("验证码错误!");
-                        response.setStatus(200);
-                        response.setContentType("application/json;charset=UTF-8");
-                        log.info("验证码错误!");
-                        response.getWriter().write(JSON.toJSONString(BaseResponse.fail(401, "验证码错误！")));
+                        ServletUtils.renderString(response, "", "验证码错误！");
                         return;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    response.setStatus(200);
-                    response.setContentType("application/json;charset=UTF-8");
-                    log.info("未知异常!");
-                    response.getWriter().write(JSON.toJSONString(BaseResponse.fail(405, "未知异常！")));
+                    ServletUtils.renderString(response, "", "未知异常！");
                     return;
                 }
                 chain.doFilter(requestWrapper, response);
