@@ -22,7 +22,7 @@ public class PageResult  implements Serializable {
     private List<?> rows;
 
     /** 消息状态码 */
-    private Integer code;
+    private String code;
 
     /** 消息内容 */
     private String msg;

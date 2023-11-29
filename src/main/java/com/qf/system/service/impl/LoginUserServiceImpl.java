@@ -18,6 +18,7 @@ public class LoginUserServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println(username);
+        //测试密码 123456
         User user = new User(username, "$2a$10$Un8DAyq6H3gXDeVCzAznH.6LG8QBqukMjViOB3lYaA9hsu4TTBP3G");
         user.setAuthorities(null);
         return user;

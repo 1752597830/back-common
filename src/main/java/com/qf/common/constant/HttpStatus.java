@@ -10,7 +10,7 @@ public class HttpStatus {
     /**
      * 操作成功
      */
-    public static final int SUCCESS = 200;
+    public static final String SUCCESS = "200";
 
     /**
      * 对象创建成功

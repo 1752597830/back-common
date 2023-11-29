@@ -3,6 +3,7 @@ package com.qf.common.filter;
 import com.alibaba.fastjson.JSON;
 import com.qf.common.constant.Constant;
 import com.qf.common.core.domain.BaseResponse;
+import com.qf.common.core.domain.ResultCode;
 import com.qf.common.utils.BeanUtils;
 import com.qf.common.utils.GeneralUtil;
 import com.qf.common.utils.JwtUtil;
@@ -28,6 +29,11 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
+    @Value("${token.header}")
+    private String header;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -40,18 +46,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
         // 2、获取JWT
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(header);
         //log.info("接收到的token:{}",token);
         if( token == null ) {
-            ServletUtils.renderString(response, "", "未登录无法访问！");
+            ServletUtils.renderString(response, ResultCode.NOT_LOGIN_ERROR.getCode(), ResultCode.NOT_LOGIN_ERROR.getMessage());
             return;
         }
         if (token != null) {
             try {
-                JwtUtil jwtUtil = BeanUtils.getBean("JWTToken");
                 jwtUtil.tokenVerify(token);
             }catch (Exception e){
-                ServletUtils.renderString(response, "", "登录过期，请重新登录！");
+                ServletUtils.renderString(response, ResultCode.LOGIN_EXPIRED.getCode(), ResultCode.LOGIN_EXPIRED.getMessage());
                 return;
             }
         }

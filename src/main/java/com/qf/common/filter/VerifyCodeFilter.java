@@ -1,9 +1,8 @@
 package com.qf.common.filter;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qf.common.constant.UserConstant;
-import com.qf.common.core.domain.BaseResponse;
+import com.qf.common.core.domain.ResultCode;
 import com.qf.common.utils.BodyReaderRequestWrapper;
 import com.qf.common.utils.RedisCache;
 import com.qf.common.utils.ServletUtils;
@@ -56,22 +55,22 @@ public class VerifyCodeFilter extends GenericFilterBean {
                     String uuid = map.get("uuid");
                     if (StringUtils.isEmpty(code)) {
                         //throw new BaseException("验证码不能为空!");
-                        ServletUtils.renderString(response, "", "验证码不能为空！");
+                        ServletUtils.renderString(response, ResultCode.VERIFY_CODE_NOTNULL.getCode(), ResultCode.VERIFY_CODE_NOTNULL.getMessage());
                         return;
                     }
                     if (!code.equals(redisCache.getCacheObject(UserConstant.captcha + uuid))) {
                         //throw new BaseException("验证码错误!");
-                        ServletUtils.renderString(response, "", "验证码错误！");
+                        ServletUtils.renderString(response, ResultCode.VERIFY_CODE_ERROR.getCode(), ResultCode.VERIFY_CODE_ERROR.getMessage());
                         return;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    ServletUtils.renderString(response, "", "未知异常！");
+                    ServletUtils.renderString(response, ResultCode.SYSTEM_ERROR.getCode(), ResultCode.SYSTEM_ERROR.getMessage());
                     return;
                 }
                 chain.doFilter(requestWrapper, response);
             }
-            chain.doFilter(request, response);
         }
+        chain.doFilter(request, response);
     }
 }

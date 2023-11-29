@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("body")
-@Tag(name = "body参数")
+@Tag(name = "测试接口文档")
 public class UserController {
 
     @Operation(summary = "普通body请求")
