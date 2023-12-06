@@ -16,14 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TestController {
 
-    @RequestMapping("/test")
-    public BaseResponse test() {
-        throw new BaseException("501", "用户不存在");
-    }
+    //@RequestMapping("/test")
+    //public BaseResponse test() {
+    //    throw new BaseException("501", "用户不存在");
+    //}
 
     @RequestMapping("/test1")
     public BaseResponse test1() {
-        log.info("进来了");
-        throw new BaseException("100", "校验了");
+        log.info("进来了1");
+        throw new BaseException("1001", "校验了");
+    }
+
+    @RequestMapping("/test2")
+    public BaseResponse test2() {
+        log.info("进来了2");
+        throw new BaseException("1002", "校验了");
     }
 }

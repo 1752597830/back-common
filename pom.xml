@@ -48,7 +48,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.3.1</version>
         </dependency>
         <!-- 阿里JSON解析器 -->
         <dependency>
@@ -135,6 +135,13 @@
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
             <version>1.6.2</version>
+        </dependency>
+        <!--easy code 报错-->
+        <!--Cannot invoke "javax.script.ScriptEngine.eval(String)" because "engine" is null-->
+        <dependency>
+            <groupId>org.openjdk.nashorn</groupId>
+            <artifactId>nashorn-core</artifactId>
+            <version>15.4</version>
         </dependency>
     </dependencies>
     <build>

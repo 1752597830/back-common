@@ -5,9 +5,9 @@ springboot-init:
   # 版本
   version: 1.0.0
 # 开发环境配置
-#server:
-#  #服务器的HTTP端口
-#  port: 8080
+server:
+  #服务器的HTTP端口
+  port: 8080
 #  servlet:
 #    # 应用的访问路径
 #    context-path: /
@@ -35,7 +35,7 @@ spring:
   data:
     redis:
       # 地址
-      host: 192.168.1.109
+      host: 192.168.1.110
       # 端口，默认为6379
       port: 6379
       # 密码

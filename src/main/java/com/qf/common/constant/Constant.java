@@ -17,6 +17,7 @@ public class Constant {
     public static String[] annos = {
             "/register",
             "/login",
+            "/captcha",
             "/unAuth",
             "/user/refreshToken",
             "/test1",
