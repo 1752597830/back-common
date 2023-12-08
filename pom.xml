@@ -20,7 +20,7 @@
         <druid.version>1.2.6</druid.version>
         <mysql.version>8.0.33</mysql.version>
         <fastjson.version>1.2.74</fastjson.version>
-        <pagehelper.version>5.1.2</pagehelper.version>
+        <pagehelper-spring-boot-starter.version>2.0.0</pagehelper-spring-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -91,8 +91,8 @@
         <!--    分页    -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.auth0</groupId>
